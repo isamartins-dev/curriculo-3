@@ -1,0 +1,1131 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Isadora Martins Lima Loures | Engenharia de Controle e Automação</title>
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Google Fonts: Space Grotesk, Inter & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+  <!-- Configuração do Tailwind -->
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            display: ['Space Grotesk', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          colors: {
+            graphite: {
+              950: '#090b0f',
+              900: '#0f131a',
+              850: '#141923',
+              800: '#1c2331',
+              700: '#2a3447',
+            },
+            electric: {
+              400: '#22d3ee',
+              500: '#06b6d4',
+              600: '#0891b2',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Padrão de grade sutil estilo engenharia/PCB no fundo */
+    .bg-engineering-grid {
+      background-size: 32px 32px;
+      background-image: 
+        linear-gradient(to right, rgba(6, 182, 212, 0.05) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(6, 182, 212, 0.05) 1px, transparent 1px);
+    }
+
+    html:not(.dark) .bg-engineering-grid {
+      background-image: 
+        linear-gradient(to right, rgba(8, 145, 178, 0.06) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(8, 145, 178, 0.06) 1px, transparent 1px);
+    }
+
+    /* Animação suave de entrada */
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(16px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .animate-fade-up {
+      animation: fadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    /* Estilos dedicados para Impressão / Salvar em PDF */
+    @media print {
+      @page {
+        margin: 1.2cm;
+        size: A4 portrait;
+      }
+      body {
+        background: #ffffff !important;
+        color: #111827 !important;
+        font-size: 11pt !important;
+      }
+      .no-print {
+        display: none !important;
+      }
+      .print-break-inside {
+        break-inside: avoid;
+      }
+      .print-reset-card {
+        background: #ffffff !important;
+        border: 1px solid #d1d5db !important;
+        box-shadow: none !important;
+        color: #111827 !important;
+      }
+      .print-text-dark {
+        color: #111827 !important;
+      }
+      .print-text-muted {
+        color: #4b5563 !important;
+      }
+      .skill-card {
+        display: flex !important;
+      }
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800 dark:bg-graphite-950 dark:text-slate-100 font-sans antialiased transition-colors duration-300 bg-engineering-grid selection:bg-electric-500 selection:text-white">
+
+  <!-- Toast de Notificação (Feedback Visual) -->
+  <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2 pointer-events-none no-print"></div>
+
+  <!-- Barra de Navegação Superior -->
+  <header class="sticky top-0 z-40 backdrop-blur-md bg-white/80 dark:bg-graphite-950/85 border-b border-slate-200 dark:border-graphite-800 transition-colors duration-300 no-print">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <!-- Marca / Identificador -->
+      <a href="#inicio" class="flex items-center gap-2.5 group">
+        <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-electric-500 to-emerald-500 flex items-center justify-center text-white font-mono font-bold text-sm shadow-lg shadow-electric-500/20 group-hover:scale-105 transition-transform">
+          IL
+        </div>
+        <div class="flex flex-col">
+          <span class="font-display font-bold text-sm sm:text-base tracking-tight text-slate-900 dark:text-white leading-none">
+            Isadora Loures
+          </span>
+          <span class="font-mono text-[10px] text-electric-600 dark:text-electric-400 uppercase tracking-wider mt-0.5">
+            Controle &amp; Automação
+          </span>
+        </div>
+      </a>
+
+      <!-- Links de Navegação Desktop -->
+      <nav class="hidden md:flex items-center gap-6 text-sm font-medium text-slate-600 dark:text-slate-300">
+        <a href="#habilidades" class="hover:text-electric-600 dark:hover:text-electric-400 transition-colors">Habilidades</a>
+        <a href="#diferenciais" class="hover:text-electric-600 dark:hover:text-electric-400 transition-colors">Diferenciais</a>
+        <a href="#projetos" class="hover:text-electric-600 dark:hover:text-electric-400 transition-colors">Experiência &amp; Projetos</a>
+        <a href="#formacao" class="hover:text-electric-600 dark:hover:text-electric-400 transition-colors">Formação</a>
+        <a href="#contato" class="hover:text-electric-600 dark:hover:text-electric-400 transition-colors">Contato</a>
+      </nav>
+
+      <!-- Controles de Tema e Impressão -->
+      <div class="flex items-center gap-2 sm:gap-3">
+        <button id="theme-toggle" type="button" aria-label="Alternar tema claro ou escuro"
+          class="p-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-graphite-800 dark:hover:bg-graphite-700 text-slate-700 dark:text-amber-400 transition-all border border-slate-200 dark:border-graphite-700"
+          title="Alternar Tema">
+          <i id="theme-icon" class="fa-solid fa-sun text-sm"></i>
+        </button>
+
+        <button onclick="window.print()" type="button"
+          class="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-electric-600 hover:bg-electric-500 text-white text-xs sm:text-sm font-semibold shadow-md shadow-electric-500/20 transition-all active:scale-95">
+          <i class="fa-solid fa-file-pdf"></i>
+          <span class="hidden sm:inline">Salvar PDF / Imprimir</span>
+          <span class="sm:hidden">PDF</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Conteúdo Principal -->
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 space-y-14 sm:space-y-20">
+
+    <!-- 1. HERO / CABEÇALHO -->
+    <section id="inicio" class="animate-fade-up">
+      <div class="relative overflow-hidden rounded-3xl bg-white dark:bg-graphite-900 border border-slate-200 dark:border-graphite-800 p-6 sm:p-10 lg:p-12 shadow-xl shadow-slate-200/50 dark:shadow-black/40 print-reset-card">
+        
+        <!-- Elementos decorativos de circuito -->
+        <div class="absolute -top-24 -right-24 w-72 h-72 bg-electric-500/10 rounded-full blur-3xl pointer-events-none no-print"></div>
+        <div class="absolute -bottom-24 -left-24 w-72 h-72 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none no-print"></div>
+
+        <div class="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-8">
+          <div class="space-y-5 max-w-3xl">
+            <!-- Badge de Status / Disponibilidade -->
+            <div class="inline-flex flex-wrap items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-700 dark:text-emerald-400 text-xs font-mono font-medium">
+              <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+              <span>Disponível para Estágio em Engenharia de Controle e Automação</span>
+            </div>
+
+            <!-- Nome e Título -->
+            <div>
+              <h1 class="font-display text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-slate-900 dark:text-white print-text-dark">
+                Isadora Martins Lima Loures
+              </h1>
+              <p class="mt-2 text-base sm:text-lg lg:text-xl font-medium text-electric-600 dark:text-electric-400">
+                Estudante de Engenharia de Controle e Automação <span class="text-slate-400 dark:text-slate-600 mx-1">|</span> Prototipagem, Eletrônica &amp; CAD
+              </p>
+            </div>
+
+            <!-- Metadados de Localização e Contato rápido -->
+            <div class="flex flex-wrap items-center gap-y-2 gap-x-5 text-sm text-slate-600 dark:text-slate-400 print-text-muted">
+              <span class="inline-flex items-center gap-1.5">
+                <i class="fa-solid fa-location-dot text-electric-500"></i>
+                Belo Horizonte, MG
+              </span>
+              <span class="inline-flex items-center gap-1.5">
+                <i class="fa-solid fa-graduation-cap text-amber-500"></i>
+                Centro Universitário Una (Campus Aimorés)
+              </span>
+              <span class="hidden print:inline-flex items-center gap-1.5">
+                <i class="fa-solid fa-envelope text-electric-500"></i>
+                isadoramartinslimaloures@gmail.com
+              </span>
+              <span class="hidden print:inline-flex items-center gap-1.5">
+                <i class="fa-brands fa-whatsapp text-emerald-500"></i>
+                (31) 97134-6391
+              </span>
+            </div>
+
+            <!-- Resumo Profissional -->
+            <p class="text-slate-600 dark:text-slate-300 text-sm sm:text-base leading-relaxed print-text-dark">
+              Graduanda em Engenharia de Controle e Automação em busca de oportunidade de estágio para aplicar e expandir conhecimentos técnicos na prática. Perfil analítico, <span class="font-semibold text-slate-900 dark:text-white">mão na massa</span> e com aprendizado acelerado, unindo experiência prática em montagem de circuitos eletrônicos, prototipagem com microcontroladores (Arduino), sensores e desenho técnico (AutoCAD) a uma sólida capacidade de comunicação e didática desenvolvida como professora particular de Ciências Exatas.
+            </p>
+
+            <!-- Botões de Ação Rápida -->
+            <div class="pt-2 flex flex-wrap items-center gap-3 no-print">
+              <button onclick="copyToClipboard('isadoramartinslimaloures@gmail.com', 'E-mail')" type="button"
+                class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-slate-900 dark:bg-white text-white dark:text-graphite-950 hover:bg-slate-800 dark:hover:bg-slate-200 text-sm font-semibold transition-all shadow-sm active:scale-95">
+                <i class="fa-regular fa-copy"></i>
+                <span>Copiar E-mail</span>
+              </button>
+
+              <a href="https://wa.me/5531971346391?text=Ol%C3%A1%20Isadora!%20Vi%20seu%20curr%C3%ADculo%20interativo%20de%20Engenharia%20de%20Controle%20e%20Automa%C3%A7%C3%A3o%20e%20gostaria%20de%20conversar."
+                target="_blank" rel="noopener noreferrer"
+                class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-sm font-semibold transition-all shadow-sm shadow-emerald-500/20 active:scale-95">
+                <i class="fa-brands fa-whatsapp text-base"></i>
+                <span>WhatsApp</span>
+              </a>
+
+              <a href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer"
+                class="inline-flex items-center gap-2 px-3.5 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-graphite-800 dark:hover:bg-graphite-700 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-graphite-700 text-sm font-medium transition-all"
+                title="Perfil LinkedIn">
+                <i class="fa-brands fa-linkedin text-electric-600 dark:text-electric-400 text-base"></i>
+                <span>LinkedIn</span>
+              </a>
+
+              <a href="https://github.com" target="_blank" rel="noopener noreferrer"
+                class="inline-flex items-center gap-2 px-3.5 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-graphite-800 dark:hover:bg-graphite-700 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-graphite-700 text-sm font-medium transition-all"
+                title="Portfólio GitHub">
+                <i class="fa-brands fa-github text-base"></i>
+                <span>GitHub</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- Painel Lateral de Métricas / Destaques Rápidos -->
+          <div class="grid grid-cols-2 lg:grid-cols-1 gap-3 sm:gap-4 lg:w-72 shrink-0">
+            <div class="p-4 rounded-2xl bg-slate-50 dark:bg-graphite-850 border border-slate-200/80 dark:border-graphite-700/80 print-reset-card">
+              <div class="flex items-center justify-between mb-1">
+                <span class="font-mono text-xs uppercase tracking-wider text-slate-500 dark:text-slate-400">Foco Técnico</span>
+                <i class="fa-solid fa-microchip text-electric-500"></i>
+              </div>
+              <p class="font-display font-bold text-base sm:text-lg text-slate-900 dark:text-white">Hardware &amp; CAD</p>
+              <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Arduino, Sensores, Circuitos &amp; AutoCAD</p>
+            </div>
+
+            <div class="p-4 rounded-2xl bg-slate-50 dark:bg-graphite-850 border border-slate-200/80 dark:border-graphite-700/80 print-reset-card">
+              <div class="flex items-center justify-between mb-1">
+                <span class="font-mono text-xs uppercase tracking-wider text-slate-500 dark:text-slate-400">Diferencial</span>
+                <i class="fa-solid fa-chalkboard-user text-amber-500"></i>
+              </div>
+              <p class="font-display font-bold text-base sm:text-lg text-slate-900 dark:text-white">Didática &amp; Exatas</p>
+              <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Comunicação clara e rigor analítico</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. HABILIDADES TÉCNICAS (COM FILTRO INTERATIVO) -->
+    <section id="habilidades" class="space-y-6">
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+        <div>
+          <span class="font-mono text-xs font-semibold uppercase tracking-widest text-electric-600 dark:text-electric-400">
+            01 // Stack &amp; Ferramentas
+          </span>
+          <h2 class="font-display text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white mt-1 print-text-dark">
+            Habilidades Técnicas
+          </h2>
+        </div>
+
+        <!-- Filtros por Categoria -->
+        <div id="skill-filters" class="flex flex-wrap gap-2 no-print" role="tablist" aria-label="Filtrar habilidades por categoria">
+          <button data-filter="all" class="filter-btn active px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-electric-600 text-white shadow-sm transition-all">
+            Todas
+          </button>
+          <button data-filter="automacao" class="filter-btn px-3.5 py-2 rounded-xl text-xs sm:text-sm font-medium bg-white dark:bg-graphite-850 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-graphite-700 hover:border-electric-500 transition-all">
+            Automação &amp; Hardware
+          </button>
+          <button data-filter="cad" class="filter-btn px-3.5 py-2 rounded-xl text-xs sm:text-sm font-medium bg-white dark:bg-graphite-850 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-graphite-700 hover:border-electric-500 transition-all">
+            Engenharia &amp; CAD
+          </button>
+          <button data-filter="programacao" class="filter-btn px-3.5 py-2 rounded-xl text-xs sm:text-sm font-medium bg-white dark:bg-graphite-850 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-graphite-700 hover:border-electric-500 transition-all">
+            Programação
+          </button>
+        </div>
+      </div>
+
+      <!-- Grade de Cards de Habilidades -->
+      <div id="skills-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+        
+        <!-- Arduino -->
+        <article data-category="automacao" class="skill-card group flex flex-col justify-between p-5 rounded-2xl bg-white dark:bg-graphite-900 border border-slate-200 dark:border-graphite-800 hover:border-electric-500/60 dark:hover:border-electric-500/60 transition-all duration-300 hover:-translate-y-1 shadow-sm print-reset-card print-break-inside">
+          <div>
+            <div class="flex items-start justify-between gap-3 mb-3">
+              <div class="w-11 h-11 rounded-xl bg-electric-500/10 text-electric-600 dark:text-electric-400 flex items-center justify-center text-xl">
+                <i class="fa-solid fa-microchip"></i>
+              </div>
+              <span class="px-2.5 py-1 rounded-lg font-mono text-[11px] font-semibold bg-electric-500/10 text-electric-700 dark:text-electric-300 border border-electric-500/20">
+                Intermediário
+              </span>
+            </div>
+            <h3 class="font-display text-lg font-bold text-slate-900 dark:text-white group-hover:text-electric-600 dark:group-hover:text-electric-400 transition-colors">
+              Arduino
+            </h3>
+            <p class="mt-1.5 text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+              Programação e prototipagem de sistemas embarcados, controle de entradas/saídas digitais e analógicas e lógica de automação.
+            </p>
+          </div>
+          <div class="mt-4 pt-3 border-t border-slate-100 dark:border-graphite-800">
+            <div class="flex justify-between text-xs font-mono text-slate-500 dark:text-slate-400 mb-1.5">
+              <span>Automação &amp; Hardware</span>
+              <span>70%</span>
+            </div>
+            <div class="w-full h-1.5 rounded-full bg-slate-100 dark:bg-graphite-800 overflow-hidden">
+              <div class="h-full rounded-full bg-gradient-to-r from-electric-500 to-emerald-400 w-[70%]"></div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Eletrônica Básica -->
+        <article data-category="automacao" class="skill-card group flex flex-col justify-between p-5 rounded-2xl bg-white dark:bg-graphite-900 border border-slate-200 dark:border-graphite-800 hover:border-electric-500/60 dark:hover:border-electric-500/60 transition-all duration-300 hover:-translate-y-1 shadow-sm print-reset-card print-break-inside">
+          <div>
+            <div class="flex items-start justify-between gap-3 mb-3">
+              <div class="w-11 h-11 rounded-xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center text-xl">
+                <i class="fa-solid fa-bolt"></i>
+              </div>
+              <span class="px-2.5 py-1 rounded-lg font-mono text-[11px] font-semibold bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 border border-emerald-500/20">
+                Intermediário
+              </span>
+            </div>
+            <h3 class="font-display text-lg font-bold text-slate-900 dark:text-white group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">
+              Eletrônica Básica
+            </h3>
+            <p class="mt-1.5 text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+              Montagem, análise e testes de circuitos em protoboard, leitura de esquemáticos, dimensionamento de resistores e diagnóstico de continuidade.
+            </p>
+          </div>
+          <div class="mt-4 pt-3 border-t border-slate-100 dark:border-graphite-800">
+            <div class="flex justify-between text-xs font-mono text-slate-500 dark:text-slate-400 mb-1.5">
+              <span>Automação &amp; Hardware</span>
+              <span>68%</span>
+            </div>
+            <div class="w-full h-1.5 rounded-full bg-slate-100 dark:bg-graphite-800 overflow-hidden">
+              <div class="h-full rounded-full bg-gradient-to-r from-emerald-500 to-electric-400 w-[68%]"></div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Sensores e Componentes Eletrônicos -->
+        <article data-category="automacao" class="skill-card group flex flex-col justify-between p-5 rounded-2xl bg-white dark:bg-graphite-900 border border-slate-200 dark:border-graphite-800 hover:border-electric-500/60 dark:hover:border-electric-500/60 transition-all duration-300 hover:-translate-y-1 shadow-sm print-reset-card print-break-inside">
+          <div>
+            <div class="flex items-start justify-between gap-3 mb-3">
+              <div class="w-11 h-11 rounded-xl bg-electric-500/10 text-electric-600 dark:text-electric-400 flex items-center justify-center text-xl">
+                <i class="fa-solid fa-wave-square"></i>
+              </div>
+              <span class="px-2.5 py-1 rounded-lg font-mono text-[11px] font-semibold bg-electric-500/10 text-electric-700 dark:text-electric-300 border border-electric-500/20">
+                Intermediário
+              </span>
+            </div>
+            <h3 class="font-display text-lg font-bold text-slate-900 dark:text-white group-hover:text-electric-600 dark:group-hover:text-electric-400 transition-colors">
+              Sensores &amp; Componentes
+            </h3>
+            <p class="mt-1.5 text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+              Integração, calibração e leitura de dados de sensores (umidade de solo, temperatura, luminosidade) e acionamento de atuadores.
+            </p>
+          </div>
+          <div class="mt-4 pt-3 border-t border-slate-100 dark:border-graphite-800">
+            <div class="flex justify-between text-xs font-mono text-slate-500 dark:text-slate-400 mb-1.5">
+              <span>Automação &amp; Hardware</span>
+              <span>70%</span>
+            </div>
+            <div class="w-full h-1.5 rounded-full bg-slate-100 dark:bg-graphite-800 overflow-hidden">
+              <div class="h-full rounded-full bg-gradient-to-r from-electric-500 to-emerald-400 w-[70%]"></div>
+            </div>
+          </div>
+        </article>
+
+        <!-- AutoCAD -->
+        <article data-category="cad" class="skill-card group flex flex-col justify-between p-5 rounded-2xl bg-white dark:bg-graphite-900 border border-slate-200 dark:border-graphite-800 hover:border-amber-500/60 dark:hover:border-amber-500/60 transition-all duration-300 hover:-translate-y-1 shadow-sm print-reset-card print-break-inside">
+          <div>
+            <div class="flex items-start justify-between gap-3 mb-3">
+              <div class="w-11 h-11 rounded-xl bg-amber-500/10 text-amber-600 dark:text-amber-400 flex items-center justify-center text-xl">
+                <i class="fa-solid fa-compass-drafting"></i>
+              </div>
+              <span class="px-2.5 py-1 rounded-lg font-mono text-[11px] font-semibold bg-amber-500/10 text-amber-700 dark:text-amber-300 border border-amber-500/20">
+                Básico / Intermediário
+              </span>
+            </div>
+            <h3 class="font-display text-lg font-bold text-slate-900 dark:text-white group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors">
+              AutoCAD
+            </h3>
+            <p class="mt-1.5 text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+              Comandos básicos de desenho técnico 2D e edição, criação de geometrias precisas, camadas, cotagem e leitura de plantas técnicas.
+            </p>
+          </div>
+          <div class="mt-4 pt-3 border-t border-slate-100 dark:border-graphite-800">
+            <div class="flex justify-between text-xs font-mono text-slate-500 dark:text-slate-400 mb-1.5">
+              <span>Engenharia &amp; CAD</span>
+              <span>55%</span>
+            </div>
+            <div class="w-full h-1.5 rounded-full bg-slate-100 dark:bg-graphite-800 overflow-hidden">
+              <div class="h-full rounded-full bg-gradient-to-r from-amber-500 to-electric-400 w-[55%]"></div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Python -->
+        <article data-category="programacao" class="skill-card group flex flex-col justify-between p-5 rounded-2xl bg-white dark:bg-graphite-900 border border-slate-200 dark:border-graphite-800 hover:border-electric-500/60 dark:hover:border-electric-500/60 transition-all duration-300 hover:-translate-y-1 shadow-sm print-reset-card print-break-inside">
+          <div>
+            <div class="flex items-start justify-between gap-3 mb-3">
+              <div class="w-11 h-11 rounded-xl bg-sky-500/10 text-sky-600 dark:text-sky-400 flex items-center justify-center text-xl">
+                <i class="fa-brands fa-python"></i>
+              </div>
+              <span class="px-2.5 py-1 rounded-lg font-mono text-[11px] font-semibold bg-sky-500/10 text-sky-700 dark:text-sky-300 border border-sky-500/20">
+                Básico
+              </span>
+            </div>
+            <h3 class="font-display text-lg font-bold text-slate-900 dark:text-white group-hover:text-sky-600 dark:group-hover:text-sky-400 transition-colors">
+              Python
+            </h3>
+            <p class="mt-1.5 text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+              Lógica de programação estruturada, automação de tarefas simples, estruturas de dados e manipulação/análise básica de dados.
+            </p>
+          </div>
+          <div class="mt-4 pt-3 border-t border-slate-100 dark:border-graphite-800">
+            <div class="flex justify-between text-xs font-mono text-slate-500 dark:text-slate-400 mb-1.5">
+              <span>Programação</span>
+              <span>45%</span>
+            </div>
+            <div class="w-full h-1.5 rounded-full bg-slate-100 dark:bg-graphite-800 overflow-hidden">
+              <div class="h-full rounded-full bg-gradient-to-r from-sky-500 to-electric-400 w-[45%]"></div>
+            </div>
+          </div>
+        </article>
+
+        <!-- C# -->
+        <article data-category="programacao" class="skill-card group flex flex-col justify-between p-5 rounded-2xl bg-white dark:bg-graphite-900 border border-slate-200 dark:border-graphite-800 hover:border-purple-500/60 dark:hover:border-purple-500/60 transition-all duration-300 hover:-translate-y-1 shadow-sm print-reset-card print-break-inside">
+          <div>
+            <div class="flex items-start justify-between gap-3 mb-3">
+              <div class="w-11 h-11 rounded-xl bg-purple-500/10 text-purple-600 dark:text-purple-400 flex items-center justify-center text-xl">
+                <i class="fa-solid fa-code"></i>
+              </div>
+              <span class="px-2.5 py-1 rounded-lg font-mono text-[11px] font-semibold bg-purple-500/10 text-purple-700 dark:text-purple-300 border border-purple-500/20">
+                Em aprendizado
+              </span>
+            </div>
+            <h3 class="font-display text-lg font-bold text-slate-900 dark:text-white group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors">
+              C# (C-Sharp)
+            </h3>
+            <p class="mt-1.5 text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+              Estudo contínuo de Programação Orientada a Objetos (POO), sintaxe .NET e desenvolvimento de aplicações estruturadas.
+            </p>
+          </div>
+          <div class="mt-4 pt-3 border-t border-slate-100 dark:border-graphite-800">
+            <div class="flex justify-between text-xs font-mono text-slate-500 dark:text-slate-400 mb-1.5">
+              <span>Programação</span>
+              <span>35%</span>
+            </div>
+            <div class="w-full h-1.5 rounded-full bg-slate-100 dark:bg-graphite-800 overflow-hidden">
+              <div class="h-full rounded-full bg-gradient-to-r from-purple-500 to-electric-400 w-[35%]"></div>
+            </div>
+          </div>
+        </article>
+
+      </div>
+
+      <!-- Ferramentas & Conhecimentos Complementares -->
+      <div class="p-5 rounded-2xl bg-white/80 dark:bg-graphite-900/80 border border-slate-200 dark:border-graphite-800 flex flex-col sm:flex-row sm:items-center justify-between gap-4 print-reset-card print-break-inside">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-slate-100 dark:bg-graphite-800 text-electric-600 dark:text-electric-400 flex items-center justify-center shrink-0">
+            <i class="fa-solid fa-toolbox"></i>
+          </div>
+          <div>
+            <h4 class="font-display font-bold text-sm sm:text-base text-slate-900 dark:text-white">
+              Conhecimentos &amp; Ferramentas Complementares
+            </h4>
+            <p class="text-xs text-slate-500 dark:text-slate-400">
+              Base analítica e instrumental aplicada à engenharia
+            </p>
+          </div>
+        </div>
+        <div class="flex flex-wrap gap-2">
+          <span class="px-3 py-1.5 rounded-xl font-mono text-xs bg-slate-100 dark:bg-graphite-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-graphite-700">
+            Metrologia &amp; Instrumentação
+          </span>
+          <span class="px-3 py-1.5 rounded-xl font-mono text-xs bg-slate-100 dark:bg-graphite-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-graphite-700">
+            Modelagem Físico-Química
+          </span>
+          <span class="px-3 py-1.5 rounded-xl font-mono text-xs bg-slate-100 dark:bg-graphite-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-graphite-700">
+            Cálculo Diferencial e Integral
+          </span>
+          <span class="px-3 py-1.5 rounded-xl font-mono text-xs bg-slate-100 dark:bg-graphite-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-graphite-700">
+            Matemática Financeira (HP 12c)
+          </span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. PONTOS FORTES & DIFERENCIAIS COMPORTAMENTAIS -->
+    <section id="diferenciais" class="space-y-6">
+      <div>
+        <span class="font-mono text-xs font-semibold uppercase tracking-widest text-amber-600 dark:text-amber-400">
+          02 // Soft Skills &amp; Perfil
+        </span>
+        <h2 class="font-display text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white mt-1 print-text-dark">
+          Pontos Fortes &amp; Diferenciais
+        </h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+        
+        <!-- Diferencial 1 -->
+        <div class="p-6 rounded-2xl bg-white dark:bg-graphite-900 border border-slate-200 dark:border-graphite-800 hover:border-amber-500/50 transition-all shadow-sm print-reset-card print-break-inside">
+          <div class="flex items-center gap-3.5 mb-3">
+            <div class="w-11 h-11 rounded-xl bg-amber-500/10 text-amber-600 dark:text-amber-400 flex items-center justify-center text-lg shrink-0">
+              <i class="fa-solid fa-comments"></i>
+            </div>
+            <h3 class="font-display text-lg font-bold text-slate-900 dark:text-white">
+              Comunicação &amp; Didática Excepcional
+            </h3>
+          </div>
+          <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+            Experiência consolidada como professora particular de Exatas (Matemática, Física, Química) e Humanas. Habilidade rara de traduzir conceitos técnicos complexos de forma clara, estruturada e acessível para equipes multidisciplinares.
+          </p>
+        </div>
+
+        <!-- Diferencial 2 -->
+        <div class="p-6 rounded-2xl bg-white dark:bg-graphite-900 border border-slate-200 dark:border-graphite-800 hover:border-electric-500/50 transition-all shadow-sm print-reset-card print-break-inside">
+          <div class="flex items-center gap-3.5 mb-3">
+            <div class="w-11 h-11 rounded-xl bg-electric-500/10 text-electric-600 dark:text-electric-400 flex items-center justify-center text-lg shrink-0">
+              <i class="fa-solid fa-magnifying-glass-chart"></i>
+            </div>
+            <h3 class="font-display text-lg font-bold text-slate-900 dark:text-white">
+              Resolução Analítica de Problemas
+            </h3>
+          </div>
+          <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+            Abordagem metodológica e investigativa para isolar variáveis, diagnosticar falhas em circuitos eletrônicos, depurar códigos e validar cálculos de engenharia com rigor lógico.
+          </p>
+        </div>
+
+        <!-- Diferencial 3 -->
+        <div class="p-6 rounded-2xl bg-white dark:bg-graphite-900 border border-slate-200 dark:border-graphite-800 hover:border-emerald-500/50 transition-all shadow-sm print-reset-card print-break-inside">
+          <div class="flex items-center gap-3.5 mb-3">
+            <div class="w-11 h-11 rounded-xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center text-lg shrink-0">
+              <i class="fa-solid fa-shield-halved"></i>
+            </div>
+            <h3 class="font-display text-lg font-bold text-slate-900 dark:text-white">
+              Disciplina, Foco &amp; Resiliência
+            </h3>
+          </div>
+          <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+            Alta capacidade de organização e gestão de tempo, conciliando com excelência a graduação em Engenharia, o trabalho autônomo como tutora e uma rotina disciplinada de treinos de Jiu-Jitsu e musculação.
+          </p>
+        </div>
+
+        <!-- Diferencial 4 -->
+        <div class="p-6 rounded-2xl bg-white dark:bg-graphite-900 border border-slate-200 dark:border-graphite-800 hover:border-electric-500/50 transition-all shadow-sm print-reset-card print-break-inside">
+          <div class="flex items-center gap-3.5 mb-3">
+            <div class="w-11 h-11 rounded-xl bg-electric-500/10 text-electric-600 dark:text-electric-400 flex items-center justify-center text-lg shrink-0">
+              <i class="fa-solid fa-gears"></i>
+            </div>
+            <h3 class="font-display text-lg font-bold text-slate-900 dark:text-white">
+              Aprendizado Ágil &amp; Proatividade ("Hands-on")
+            </h3>
+          </div>
+          <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+            Curiosidade técnica transformada em ação prática por meio de bancada e prototipagem com microcontroladores, sensores e softwares de engenharia, buscando evolução contínua a cada novo desafio.
+          </p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 4. EXPERIÊNCIA & PROJETOS PRÁTICOS (COM MODAL DE DETALHES) -->
+    <section id="projetos" class="space-y-6">
+      <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-2">
+        <div>
+          <span class="font-mono text-xs font-semibold uppercase tracking-widest text-emerald-600 dark:text-emerald-400">
+            03 // Portfólio &amp; Atuação
+          </span>
+          <h2 class="font-display text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white mt-1 print-text-dark">
+            Experiência &amp; Projetos Práticos
+          </h2>
+        </div>
+        <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 no-print">
+          Clique em qualquer cartão para explorar os detalhes técnicos
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+        <!-- Projeto 1: Arduino & Sensores -->
+        <article onclick="openProjectModal('arduino')" class="cursor-pointer group flex flex-col justify-between p-6 rounded-2xl bg-white dark:bg-graphite-900 border border-slate-200 dark:border-graphite-800 hover:border-electric-500 dark:hover:border-electric-400 transition-all duration-300 hover:-translate-y-1 shadow-sm print-reset-card print-break-inside">
+          <div>
+            <div class="flex items-center justify-between gap-2 mb-4">
+              <span class="px-2.5 py-1 rounded-lg font-mono text-xs font-semibold bg-electric-500/10 text-electric-700 dark:text-electric-300">
+                Projeto Prático
+              </span>
+              <span class="text-slate-400 group-hover:text-electric-500 transition-colors no-print">
+                <i class="fa-solid fa-arrow-up-right-from-square text-sm"></i>
+              </span>
+            </div>
+            <h3 class="font-display text-lg font-bold text-slate-900 dark:text-white group-hover:text-electric-600 dark:group-hover:text-electric-400 transition-colors">
+              Sistema de Monitoramento com Arduino e Sensores
+            </h3>
+            <p class="mt-2 text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+              Prototipagem utilizando placa compatível com Arduino Uno e módulos sensores (como umidade de solo), leitura analógica/digital e montagem completa de circuito eletrônico.
+            </p>
+          </div>
+          <div class="mt-5 pt-4 border-t border-slate-100 dark:border-graphite-800 flex flex-wrap gap-1.5">
+            <span class="font-mono text-[11px] px-2 py-0.5 rounded bg-slate-100 dark:bg-graphite-800 text-slate-600 dark:text-slate-300">Arduino Uno</span>
+            <span class="font-mono text-[11px] px-2 py-0.5 rounded bg-slate-100 dark:bg-graphite-800 text-slate-600 dark:text-slate-300">Sensores</span>
+            <span class="font-mono text-[11px] px-2 py-0.5 rounded bg-slate-100 dark:bg-graphite-800 text-slate-600 dark:text-slate-300">Protoboard</span>
+          </div>
+        </article>
+
+        <!-- Experiência 2: Professora Particular -->
+        <article onclick="openProjectModal('tutora')" class="cursor-pointer group flex flex-col justify-between p-6 rounded-2xl bg-white dark:bg-graphite-900 border border-slate-200 dark:border-graphite-800 hover:border-amber-500 dark:hover:border-amber-400 transition-all duration-300 hover:-translate-y-1 shadow-sm print-reset-card print-break-inside">
+          <div>
+            <div class="flex items-center justify-between gap-2 mb-4">
+              <span class="px-2.5 py-1 rounded-lg font-mono text-xs font-semibold bg-amber-500/10 text-amber-700 dark:text-amber-300">
+                Atuação Profissional
+              </span>
+              <span class="text-slate-400 group-hover:text-amber-500 transition-colors no-print">
+                <i class="fa-solid fa-arrow-up-right-from-square text-sm"></i>
+              </span>
+            </div>
+            <h3 class="font-display text-lg font-bold text-slate-900 dark:text-white group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors">
+              Professora Particular (Autônoma)
+            </h3>
+            <p class="mt-2 text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+              Ensino individualizado de Matemática, Física, Química e Português para ensinos fundamental e médio, desenvolvendo planejamento pedagógico, empatia e comunicação assertiva.
+            </p>
+          </div>
+          <div class="mt-5 pt-4 border-t border-slate-100 dark:border-graphite-800 flex flex-wrap gap-1.5">
+            <span class="font-mono text-[11px] px-2 py-0.5 rounded bg-slate-100 dark:bg-graphite-800 text-slate-600 dark:text-slate-300">Exatas</span>
+            <span class="font-mono text-[11px] px-2 py-0.5 rounded bg-slate-100 dark:bg-graphite-800 text-slate-600 dark:text-slate-300">Didática</span>
+            <span class="font-mono text-[11px] px-2 py-0.5 rounded bg-slate-100 dark:bg-graphite-800 text-slate-600 dark:text-slate-300">Gestão</span>
+          </div>
+        </article>
+
+        <!-- Projeto 3: Vida e Carreira -->
+        <article onclick="openProjectModal('carreira')" class="cursor-pointer group flex flex-col justify-between p-6 rounded-2xl bg-white dark:bg-graphite-900 border border-slate-200 dark:border-graphite-800 hover:border-emerald-500 dark:hover:border-emerald-400 transition-all duration-300 hover:-translate-y-1 shadow-sm print-reset-card print-break-inside">
+          <div>
+            <div class="flex items-center justify-between gap-2 mb-4">
+              <span class="px-2.5 py-1 rounded-lg font-mono text-xs font-semibold bg-emerald-500/10 text-emerald-700 dark:text-emerald-300">
+                Projeto Acadêmico
+              </span>
+              <span class="text-slate-400 group-hover:text-emerald-500 transition-colors no-print">
+                <i class="fa-solid fa-arrow-up-right-from-square text-sm"></i>
+              </span>
+            </div>
+            <h3 class="font-display text-lg font-bold text-slate-900 dark:text-white group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">
+              Planejamento de Carreira e Engenharia
+            </h3>
+            <p class="mt-2 text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+              Pesquisa e estruturação de trilhas técnicas na área de Controle e Automação (Vida e Carreira), mapeando demandas industriais, instrumentação e tecnologias emergentes.
+            </p>
+          </div>
+          <div class="mt-5 pt-4 border-t border-slate-100 dark:border-graphite-800 flex flex-wrap gap-1.5">
+            <span class="font-mono text-[11px] px-2 py-0.5 rounded bg-slate-100 dark:bg-graphite-800 text-slate-600 dark:text-slate-300">Automação Industrial</span>
+            <span class="font-mono text-[11px] px-2 py-0.5 rounded bg-slate-100 dark:bg-graphite-800 text-slate-600 dark:text-slate-300">Roadmap Técnico</span>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- 5. FORMAÇÃO ACADÊMICA -->
+    <section id="formacao" class="space-y-6">
+      <div>
+        <span class="font-mono text-xs font-semibold uppercase tracking-widest text-electric-600 dark:text-electric-400">
+          04 // Educação
+        </span>
+        <h2 class="font-display text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white mt-1 print-text-dark">
+          Formação Acadêmica
+        </h2>
+      </div>
+
+      <div class="p-6 sm:p-8 rounded-2xl bg-white dark:bg-graphite-900 border border-slate-200 dark:border-graphite-800 shadow-sm print-reset-card print-break-inside">
+        <div class="flex flex-col md:flex-row md:items-start justify-between gap-4">
+          <div class="flex items-start gap-4">
+            <div class="w-12 h-12 rounded-2xl bg-electric-500/10 text-electric-600 dark:text-electric-400 flex items-center justify-center text-xl shrink-0 mt-0.5">
+              <i class="fa-solid fa-university"></i>
+            </div>
+            <div>
+              <h3 class="font-display text-xl font-bold text-slate-900 dark:text-white">
+                Bacharelado em Engenharia de Controle e Automação
+              </h3>
+              <p class="text-sm sm:text-base font-medium text-electric-600 dark:text-electric-400 mt-0.5">
+                Centro Universitário Una — Campus Aimorés (Belo Horizonte/MG)
+              </p>
+            </div>
+          </div>
+
+          <span class="self-start px-3.5 py-1.5 rounded-xl font-mono text-xs font-semibold bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 border border-emerald-500/20">
+            Em andamento
+          </span>
+        </div>
+
+        <div class="mt-6 pt-5 border-t border-slate-100 dark:border-graphite-800">
+          <p class="font-mono text-xs uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-3">
+            Disciplinas-chave cursadas:
+          </p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5">
+            <div class="flex items-center gap-2.5 p-2.5 rounded-xl bg-slate-50 dark:bg-graphite-850 border border-slate-200/60 dark:border-graphite-800 text-sm text-slate-700 dark:text-slate-300">
+              <i class="fa-solid fa-ruler-combined text-electric-500 text-xs"></i>
+              <span>Metrologia</span>
+            </div>
+            <div class="flex items-center gap-2.5 p-2.5 rounded-xl bg-slate-50 dark:bg-graphite-850 border border-slate-200/60 dark:border-graphite-800 text-sm text-slate-700 dark:text-slate-300">
+              <i class="fa-solid fa-drafting-compass text-amber-500 text-xs"></i>
+              <span>Desenho Técnico</span>
+            </div>
+            <div class="flex items-center gap-2.5 p-2.5 rounded-xl bg-slate-50 dark:bg-graphite-850 border border-slate-200/60 dark:border-graphite-800 text-sm text-slate-700 dark:text-slate-300">
+              <i class="fa-solid fa-atom text-emerald-500 text-xs"></i>
+              <span>Ciência dos Materiais</span>
+            </div>
+            <div class="flex items-center gap-2.5 p-2.5 rounded-xl bg-slate-50 dark:bg-graphite-850 border border-slate-200/60 dark:border-graphite-800 text-sm text-slate-700 dark:text-slate-300">
+              <i class="fa-solid fa-flask text-electric-500 text-xs"></i>
+              <span>Modelagem Físico-Química</span>
+            </div>
+            <div class="flex items-center gap-2.5 p-2.5 rounded-xl bg-slate-50 dark:bg-graphite-850 border border-slate-200/60 dark:border-graphite-800 text-sm text-slate-700 dark:text-slate-300">
+              <i class="fa-solid fa-square-root-variable text-amber-500 text-xs"></i>
+              <span>Cálculo</span>
+            </div>
+            <div class="flex items-center gap-2.5 p-2.5 rounded-xl bg-slate-50 dark:bg-graphite-850 border border-slate-200/60 dark:border-graphite-800 text-sm text-slate-700 dark:text-slate-300">
+              <i class="fa-solid fa-calculator text-emerald-500 text-xs"></i>
+              <span>Matemática Financeira</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. SEÇÃO DE CONTATO INTERATIVA -->
+    <section id="contato" class="space-y-6 no-print">
+      <div>
+        <span class="font-mono text-xs font-semibold uppercase tracking-widest text-amber-600 dark:text-amber-400">
+          05 // Vamos Conversar
+        </span>
+        <h2 class="font-display text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white mt-1">
+          Contato Direto
+        </h2>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        
+        <!-- Cartões de Contato com Cópia Rápida -->
+        <div class="lg:col-span-5 space-y-4">
+          <!-- Cartão E-mail -->
+          <div class="p-5 rounded-2xl bg-white dark:bg-graphite-900 border border-slate-200 dark:border-graphite-800 flex flex-col justify-between gap-4 shadow-sm">
+            <div class="flex items-start gap-3.5">
+              <div class="w-11 h-11 rounded-xl bg-electric-500/10 text-electric-600 dark:text-electric-400 flex items-center justify-center text-lg shrink-0">
+                <i class="fa-solid fa-envelope"></i>
+              </div>
+              <div class="min-w-0 flex-1">
+                <span class="font-mono text-xs uppercase text-slate-500 dark:text-slate-400">E-mail Profissional</span>
+                <p class="font-medium text-sm sm:text-base text-slate-900 dark:text-white break-all mt-0.5">
+                  isadoramartinslimaloures@gmail.com
+                </p>
+              </div>
+            </div>
+            <div class="flex items-center gap-2">
+              <button onclick="copyToClipboard('isadoramartinslimaloures@gmail.com', 'E-mail', this)" type="button"
+                class="flex-1 inline-flex items-center justify-center gap-2 px-3.5 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-graphite-800 dark:hover:bg-graphite-700 text-slate-800 dark:text-slate-200 text-xs font-semibold transition-all">
+                <i class="fa-regular fa-copy"></i>
+                <span>Copiar E-mail</span>
+              </button>
+              <a href="mailto:isadoramartinslimaloures@gmail.com"
+                class="px-3.5 py-2 rounded-xl bg-electric-600 hover:bg-electric-500 text-white text-xs font-semibold transition-all">
+                Enviar
+              </a>
+            </div>
+          </div>
+
+          <!-- Cartão Telefone / WhatsApp -->
+          <div class="p-5 rounded-2xl bg-white dark:bg-graphite-900 border border-slate-200 dark:border-graphite-800 flex flex-col justify-between gap-4 shadow-sm">
+            <div class="flex items-start gap-3.5">
+              <div class="w-11 h-11 rounded-xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center text-lg shrink-0">
+                <i class="fa-brands fa-whatsapp"></i>
+              </div>
+              <div>
+                <span class="font-mono text-xs uppercase text-slate-500 dark:text-slate-400">Telefone / WhatsApp</span>
+                <p class="font-medium text-base text-slate-900 dark:text-white mt-0.5">
+                  (31) 97134-6391
+                </p>
+              </div>
+            </div>
+            <div class="flex items-center gap-2">
+              <button onclick="copyToClipboard('(31) 97134-6391', 'Telefone', this)" type="button"
+                class="flex-1 inline-flex items-center justify-center gap-2 px-3.5 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-graphite-800 dark:hover:bg-graphite-700 text-slate-800 dark:text-slate-200 text-xs font-semibold transition-all">
+                <i class="fa-regular fa-copy"></i>
+                <span>Copiar Número</span>
+              </button>
+              <a href="https://wa.me/5531971346391?text=Ol%C3%A1%20Isadora!%20Gostaria%20de%20conversar%20sobre%20uma%20oportunidade%20de%20est%C3%A1gio."
+                target="_blank" rel="noopener noreferrer"
+                class="px-3.5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold transition-all">
+                Abrir Chat
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Formulário Direto para Recrutadores -->
+        <div class="lg:col-span-7 p-6 sm:p-7 rounded-2xl bg-white dark:bg-graphite-900 border border-slate-200 dark:border-graphite-800 shadow-sm">
+          <h3 class="font-display text-lg font-bold text-slate-900 dark:text-white">
+            Mensagem Rápida para Recrutadores
+          </h3>
+          <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1">
+            Preencha os campos abaixo para preparar e enviar uma mensagem diretamente para Isadora.
+          </p>
+
+          <form id="recruiter-form" class="mt-5 space-y-4">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label for="rec-name" class="block text-xs font-mono uppercase text-slate-600 dark:text-slate-400 mb-1.5">Seu Nome / Empresa *</label>
+                <input id="rec-name" type="text" required placeholder="Ex: Ana Silva — Tech Automação"
+                  class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-graphite-850 border border-slate-200 dark:border-graphite-700 text-sm text-slate-900 dark:text-white focus:outline-none focus:border-electric-500 transition-colors" />
+              </div>
+              <div>
+                <label for="rec-email" class="block text-xs font-mono uppercase text-slate-600 dark:text-slate-400 mb-1.5">E-mail de Retorno *</label>
+                <input id="rec-email" type="email" required placeholder="recrutamento@empresa.com.br"
+                  class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-graphite-850 border border-slate-200 dark:border-graphite-700 text-sm text-slate-900 dark:text-white focus:outline-none focus:border-electric-500 transition-colors" />
+              </div>
+            </div>
+
+            <div>
+              <label for="rec-message" class="block text-xs font-mono uppercase text-slate-600 dark:text-slate-400 mb-1.5">Mensagem / Detalhes da Vaga *</label>
+              <textarea id="rec-message" rows="3" required placeholder="Olá Isadora, gostaríamos de convidar você para uma entrevista de estágio em Engenharia de Controle e Automação..."
+                class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-graphite-850 border border-slate-200 dark:border-graphite-700 text-sm text-slate-900 dark:text-white focus:outline-none focus:border-electric-500 transition-colors"></textarea>
+            </div>
+
+            <div class="flex flex-wrap items-center justify-between gap-3 pt-1">
+              <span id="form-status" class="text-xs font-medium text-emerald-600 dark:text-emerald-400 hidden">
+                <i class="fa-solid fa-circle-check mr-1"></i> Mensagem registrada com sucesso!
+              </span>
+              <button type="submit"
+                class="ml-auto inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-electric-600 hover:bg-electric-500 text-white text-sm font-semibold shadow-md shadow-electric-500/20 transition-all active:scale-95">
+                <i class="fa-solid fa-paper-plane"></i>
+                <span>Enviar Mensagem</span>
+              </button>
+            </div>
+          </form>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Rodapé -->
+  <footer class="border-t border-slate-200 dark:border-graphite-800 py-8 mt-12 text-center text-xs sm:text-sm text-slate-500 dark:text-slate-400">
+    <div class="max-w-6xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-3">
+      <p>
+        &copy; 2026 <span class="font-semibold text-slate-700 dark:text-slate-200">Isadora Martins Lima Loures</span> — Belo Horizonte, MG.
+      </p>
+      <p class="font-mono text-xs text-slate-400 dark:text-slate-500">
+        Engenharia de Controle e Automação • Portfólio Interativo
+      </p>
+    </div>
+  </footer>
+
+  <!-- Modal de Detalhes dos Projetos / Experiências -->
+  <div id="project-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-black/70 backdrop-blur-sm no-print" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="relative w-full max-w-xl rounded-3xl bg-white dark:bg-graphite-900 border border-slate-200 dark:border-graphite-700 p-6 sm:p-8 shadow-2xl animate-fade-up">
+      <button onclick="closeProjectModal()" type="button" aria-label="Fechar janela"
+        class="absolute top-5 right-5 w-9 h-9 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-graphite-800 dark:hover:bg-graphite-700 text-slate-600 dark:text-slate-300 flex items-center justify-center transition-colors">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+      <span id="modal-badge" class="inline-block px-3 py-1 rounded-lg font-mono text-xs font-semibold bg-electric-500/10 text-electric-600 dark:text-electric-400 mb-3">
+        Categoria
+      </span>
+      <h3 id="modal-title" class="font-display text-xl sm:text-2xl font-bold text-slate-900 dark:text-white pr-8">
+        Título do Projeto
+      </h3>
+      <p id="modal-subtitle" class="text-xs font-mono text-slate-500 dark:text-slate-400 mt-1">
+        Subtítulo técnico
+      </p>
+
+      <div id="modal-body" class="mt-4 space-y-3 text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+        <!-- Conteúdo inserido via JavaScript -->
+      </div>
+
+      <div class="mt-6 pt-4 border-t border-slate-100 dark:border-graphite-800 flex items-center justify-between">
+        <div id="modal-tags" class="flex flex-wrap gap-1.5"></div>
+        <button onclick="closeProjectModal()" type="button"
+          class="px-4 py-2 rounded-xl bg-slate-900 dark:bg-white text-white dark:text-graphite-950 text-xs font-semibold hover:opacity-90 transition-opacity">
+          Fechar
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts de Interatividade -->
+  <script>
+    // 1. Alternância de Tema (Dark / Light Mode)
+    const htmlEl = document.documentElement;
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    const themeIcon = document.getElementById('theme-icon');
+
+    function updateThemeIcon() {
+      const isDark = htmlEl.classList.contains('dark');
+      themeIcon.className = isDark ? 'fa-solid fa-sun text-sm' : 'fa-solid fa-moon text-sm text-slate-700';
+    }
+
+    // Verifica preferência salva no localStorage
+    try {
+      const savedTheme = localStorage.getItem('cv-theme');
+      if (savedTheme === 'light') {
+        htmlEl.classList.remove('dark');
+      } else {
+        htmlEl.classList.add('dark');
+      }
+    } catch (e) {
+      // Fallback silencioso caso o navegador bloqueie localStorage
+    }
+    updateThemeIcon();
+
+    themeToggleBtn.addEventListener('click', () => {
+      htmlEl.classList.toggle('dark');
+      const isDark = htmlEl.classList.contains('dark');
+      try {
+        localStorage.setItem('cv-theme', isDark ? 'dark' : 'light');
+      } catch (e) {}
+      updateThemeIcon();
+    });
+
+    // 2. Sistema de Notificação Toast
+    function showToast(message) {
+      const container = document.getElementById('toast-container');
+      const toast = document.createElement('div');
+      toast.className = 'flex items-center gap-2.5 px-4 py-3 rounded-xl bg-graphite-900 dark:bg-white text-white dark:text-graphite-950 text-xs sm:text-sm font-medium shadow-xl border border-slate-700 dark:border-slate-200 animate-fade-up';
+      toast.innerHTML = `<i class="fa-solid fa-circle-check text-emerald-400 dark:text-emerald-600"></i><span>${message}</span>`;
+      container.appendChild(toast);
+
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateY(8px)';
+        toast.style.transition = 'all 0.25s ease';
+        setTimeout(() => toast.remove(), 250);
+      }, 2800);
+    }
+
+    // 3. Copiar para Área de Transferência (Compatível com iframes via execCommand)
+    function copyToClipboard(text, label, btnElement) {
+      const tempInput = document.createElement('textarea');
+      tempInput.value = text;
+      tempInput.style.position = 'fixed';
+      tempInput.style.opacity = '0';
+      document.body.appendChild(tempInput);
+      tempInput.select();
+      
+      let success = false;
+      try {
+        success = document.execCommand('copy');
+      } catch (err) {
+        success = false;
+      }
+      document.body.removeChild(tempInput);
+
+      if (success) {
+        showToast(`${label} copiado: ${text}`);
+        if (btnElement) {
+          const originalHTML = btnElement.innerHTML;
+          btnElement.innerHTML = `<i class="fa-solid fa-check text-emerald-500"></i><span>Copiado!</span>`;
+          setTimeout(() => {
+            btnElement.innerHTML = originalHTML;
+          }, 2000);
+        }
+      } else {
+        showToast(`Não foi possível copiar automaticamente.`);
+      }
+    }
+
+    // 4. Filtro Interativo de Habilidades Técnicas
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const skillCards = document.querySelectorAll('.skill-card');
+
+    filterButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const selectedFilter = btn.getAttribute('data-filter');
+
+        // Atualiza aparência dos botões
+        filterButtons.forEach(b => {
+          b.classList.remove('active', 'bg-electric-600', 'text-white', 'shadow-sm', 'font-semibold');
+          b.classList.add('bg-white', 'dark:bg-graphite-850', 'text-slate-600', 'dark:text-slate-300', 'border', 'border-slate-200', 'dark:border-graphite-700', 'font-medium');
+        });
+        btn.classList.add('active', 'bg-electric-600', 'text-white', 'shadow-sm', 'font-semibold');
+        btn.classList.remove('bg-white', 'dark:bg-graphite-850', 'text-slate-600', 'dark:text-slate-300', 'border', 'border-slate-200', 'dark:border-graphite-700', 'font-medium');
+
+        // Filtra os cartões
+        skillCards.forEach(card => {
+          const category = card.getAttribute('data-category');
+          if (selectedFilter === 'all' || category === selectedFilter) {
+            card.classList.remove('hidden');
+            card.classList.add('flex');
+          } else {
+            card.classList.add('hidden');
+            card.classList.remove('flex');
+          }
+        });
+      });
+    });
+
+    // 5. Modal Detalhado de Projetos & Experiências
+    const projectsData = {
+      arduino: {
+        badge: 'Projeto Prático // Hardware & Embarcados',
+        title: 'Sistema de Monitoramento com Arduino e Sensores',
+        subtitle: 'Prototipagem eletrônica, aquisição de sinais e lógica embarcada',
+        body: `
+          <p>Desenvolvimento prático de um sistema de monitoramento ambiental utilizando placa microcontroladora compatível com <strong>Arduino Uno</strong> e módulos sensores (com destaque para medição de umidade do solo).</p>
+          <ul class="list-disc pl-5 space-y-1.5 mt-2">
+            <li><strong>Montagem de Circuito:</strong> Interligação em protoboard, organização de barramentos de alimentação (VCC/GND) e verificação de continuidade.</li>
+            <li><strong>Aquisição de Dados:</strong> Leitura de sinais analógicos e digitais, mapeamento de faixas de tensão e calibração de limiares de acionamento.</li>
+            <li><strong>Depuração:</strong> Testes iterativos via Monitor Serial da IDE Arduino para validação da estabilidade das leituras.</li>
+          </ul>
+        `,
+        tags: ['Arduino Uno', 'C/C++ Embarcado', 'Sensores Analógicos', 'Protoboard']
+      },
+      tutora: {
+        badge: 'Atuação Profissional // Educação & Liderança',
+        title: 'Professora Particular (Autônoma)',
+        subtitle: 'Matemática, Física, Química e Português — Ensino Fundamental e Médio',
+        body: `
+          <p>Atuação independente como tutora particular, acompanhando estudantes de diferentes perfis e necessidades de aprendizagem em disciplinas de Ciências Exatas e Linguagens.</p>
+          <ul class="list-disc pl-5 space-y-1.5 mt-2">
+            <li><strong>Tradução de Complexidade:</strong> Capacidade de decompor problemas abstratos de Física, Química e Matemática em etapas lógicas e compreensíveis.</li>
+            <li><strong>Planejamento &amp; Gestão:</strong> Organização de cronogramas individuais, preparação de listas de exercícios direcionadas e acompanhamento de evolução.</li>
+            <li><strong>Comunicação Assertiva:</strong> Escuta ativa, empatia e clareza na exposição de ideias — competências essenciais para trabalho em equipe na engenharia.</li>
+          </ul>
+        `,
+        tags: ['Didática', 'Ciências Exatas', 'Comunicação Clara', 'Autogestão']
+      },
+      carreira: {
+        badge: 'Projeto Acadêmico // Estratégia & Engenharia',
+        title: 'Planejamento de Carreira e Engenharia (Vida e Carreira)',
+        subtitle: 'Centro Universitário Una — Engenharia de Controle e Automação',
+        body: `
+          <p>Estruturação estratégica de desenvolvimento profissional voltado ao ecossistema de Controle, Instrumentação e Automação Industrial.</p>
+          <ul class="list-disc pl-5 space-y-1.5 mt-2">
+            <li><strong>Mapeamento Técnico:</strong> Identificação das principais competências exigidas pela indústria (CLPs, redes industriais, CAD, programação e eletrônica).</li>
+            <li><strong>Plano de Evolução:</strong> Alinhamento entre as disciplinas da graduação (Metrologia, Desenho Técnico, Cálculo) e projetos práticos de bancada.</li>
+          </ul>
+        `,
+        tags: ['Controle e Automação', 'Planejamento', 'Pesquisa Técnica']
+      }
+    };
+
+    const modalEl = document.getElementById('project-modal');
+    const modalBadge = document.getElementById('modal-badge');
+    const modalTitle = document.getElementById('modal-title');
+    const modalSubtitle = document.getElementById('modal-subtitle');
+    const modalBody = document.getElementById('modal-body');
+    const modalTags = document.getElementById('modal-tags');
+
+    function openProjectModal(key) {
+      const data = projectsData[key];
+      if (!data) return;
+
+      modalBadge.textContent = data.badge;
+      modalTitle.textContent = data.title;
+      modalSubtitle.textContent = data.subtitle;
+      modalBody.innerHTML = data.body;
+      modalTags.innerHTML = data.tags.map(t => 
+        `<span class="font-mono text-[11px] px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-graphite-800 text-slate-700 dark:text-slate-300">${t}</span>`
+      ).join('');
+
+      modalEl.classList.remove('hidden');
+      modalEl.classList.add('flex');
+    }
+
+    function closeProjectModal() {
+      modalEl.classList.add('hidden');
+      modalEl.classList.remove('flex');
+    }
+
+    // Fechar modal ao clicar fora ou pressionar ESC
+    modalEl.addEventListener('click', (e) => {
+      if (e.target === modalEl) closeProjectModal();
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !modalEl.classList.contains('hidden')) {
+        closeProjectModal();
+      }
+    });
+
+    // 6. Formulário de Contato para Recrutadores
+    const recruiterForm = document.getElementById('recruiter-form');
+    const formStatus = document.getElementById('form-status');
+
+    recruiterForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const name = document.getElementById('rec-name').value.trim();
+      const email = document.getElementById('rec-email').value.trim();
+      const msg = document.getElementById('rec-message').value.trim();
+
+      if (!name || !email || !msg) return;
+
+      formStatus.classList.remove('hidden');
+      showToast(`Obrigada, ${name}! Sua mensagem foi preparada.`);
+      
+      // Abre cliente de e-mail como complemento opcional e limpa o formulário
+      const mailtoLink = `mailto:isadoramartinslimaloures@gmail.com?subject=${encodeURIComponent('Contato via Currículo Interativo - ' + name)}&body=${encodeURIComponent(msg + '\n\nContato de retorno: ' + email)}`;
+      window.open(mailtoLink, '_blank');
+      
+      recruiterForm.reset();
+      setTimeout(() => {
+        formStatus.classList.add('hidden');
+      }, 5000);
+    });
+  </script>
+</body>
+</html>
